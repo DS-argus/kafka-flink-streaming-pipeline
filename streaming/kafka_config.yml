@@ -1,0 +1,58 @@
+# Kafka Producer 설정
+kafka:
+  # 기본 설정
+  bootstrap_servers: "kafka-broker-1:29092,kafka-broker-2:29092,kafka-broker-3:29092"
+  
+  # Producer 공통 설정
+  producer:
+    # 기본 설정
+    acks: "1"
+    batch.size: 131072  # 128KB
+    linger.ms: 50        # 50ms 버퍼링
+    
+    # 버퍼 설정
+    queue.buffering.max.messages: 200000  # 최대 20만개 메시지 버퍼
+    # queue.buffering.max.kbytes: 2097152   # 2GB 버퍼
+    
+    # 타임아웃 및 재시도 설정
+    message.timeout.ms: 300000  # 5분
+    request.timeout.ms: 300000  # 5분
+    retries: 5
+    retry.backoff.ms: 100
+    
+    # 압축 설정
+    compression.type: "lz4"
+    
+  # Events Producer 전용 설정
+  events_producer:
+    client.id: "events_producer_platform_"
+    # Events 특화 설정이 필요한 경우 여기에 추가
+    
+  # Page Views Producer 전용 설정  
+  page_views_producer:
+    client.id: "page_views_producer_platform_"
+    # Page Views 특화 설정이 필요한 경우 여기에 추가
+
+# 환경 설정
+environment:
+  # 기본 날짜 범위
+  start_date: "2016-06-14"
+  end_date: "2016-06-29"
+  
+  # 시간 스케일 팩터 (기본값)
+  time_scale_factor: 0.1
+  
+  # 플랫폼별 설정
+  platforms:
+    desktop:
+      platform_id: 1
+      platform_name: "Desktop"
+      selected_platforms: "1"
+    mobile:
+      platform_id: 2
+      platform_name: "Mobile"
+      selected_platforms: "2"
+    tablet:
+      platform_id: 3
+      platform_name: "Tablet"
+      selected_platforms: "3" 
